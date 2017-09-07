@@ -2,13 +2,16 @@ cmake_minimum_required (VERSION 2.8)
 
 project (MRPF)
 
-find_package (PCL 1.7 REQUIRED)
-message(${PCL_LIBRARY_DIRS})
+#find_package (PCL 1.7.1 EXACT REQUIRED)
+find_package (PCL 1.7.1 EXACT REQUIRED)
+#message(${PCL_LIBRARY_DIRS})
+
 
 include_directories(
 	${PCL_INCLUDE_DIRS}
-	${OCTOMAP_INCLUDE_DIRS}
+#	${OCTOMAP_INCLUDE_DIRS}
 	include)
+#message(${OCTOMAP_INCLUDE_DIRS})
 
 link_directories(${PCL_LIBRARY_DIRS} ${OCTOMAP_LIBRARIES})
 #add_definitions(${PCL_DEFINITIONS})
@@ -28,3 +31,12 @@ add_executable(../mrpf_node
 target_link_libraries(../mrpf_node
 	${PCL_LIBRARIES}
 	${OCTOMAP_LIBRARIES})
+message("**********************")
+message("${OCTOMAP_INCLUDE_DIRS}")
+message("**********************")
+message("${OCTOMAP_LIBRARIES}")
+message("**********************")
+message("${PCL_INCLUDE_DIRS}")
+message("**********************")
+message("${PCL_LIBRARIES}")
+message("**********************")

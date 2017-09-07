@@ -110,6 +110,8 @@ regist_trans regist_icp( PointCloudConstPtr input, PointCloudConstPtr target)
         icp.align(*final);
 
         A.transform = icp.getFinalTransformation();
+//icp.getFitnessScore() obtain the Euclidean fitness score(e.g., sum of squared distances from the source to the target)
+//score is littler as to better match
         A.score = icp.getFitnessScore();
         return A;
     }
@@ -303,7 +305,7 @@ public:
                 double weight = 1/new_regist.score;
 
                 if (pt.weight < weight){
-
+		  //get the best match parameter between the six situation
                     pt.weight = weight;
                     pt.heading = direction;
                     pt.trans = new_regist.transform*transform;
@@ -424,8 +426,10 @@ public:
     }
     void output(){
 
-        regist_trans estimate_trans = registration(pReg_, pModel_, sample_grid_);
-        Eval_value eval_PF = Evaluation(estimate_.trans.matrix(), initial_trans_.matrix());
+      regist_trans estimate_trans = registration(pReg_, pModel_, sample_grid_);
+      //regist_trans estimate_trans = registration(pScan_, pModel_, sample_grid_);
+      Eval_value eval_PF = Evaluation(estimate_trans.transform.matrix()*estimate_.trans.matrix(), initial_trans_.matrix());
+      //Eval_value eval_PF = Evaluation(estimate_.trans.matrix(), initial_trans_.matrix());
 
         cout << endl << endl << "================= current status ================== " << endl;
         cout << "estimate-> x: "    << estimate_.point.x    << " y: "       << estimate_.point.y    << " z: "   << estimate_.point.z    << endl;
